@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10,
     borderColor: '#37462C',
-    borderLeftWidth: 6,
+    borderLeftWidth: 7,
     borderBottomWidth: 7,
   },
 });
