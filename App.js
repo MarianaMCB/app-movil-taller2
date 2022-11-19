@@ -100,6 +100,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderColor: '#37462C',
     borderLeftWidth: 6,
-    borderBottomWidth: 6,
+    borderBottomWidth: 7,
   },
 });
