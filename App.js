@@ -12,6 +12,21 @@ import { useNavigation } from '@react-navigation/native';
 
 
 function HomeScreen() {
+
+  const navigation = useNavigation();
+
+  const NavegarSeccion = () => {
+    navigation.navigate('SeccionParticipativa');
+  }
+
+  const NavegarAsistente = () => {
+    navigation.navigate('Asistente');
+  }
+
+  const NavegarAjustes = () => {
+    navigation.navigate('Ajustes');
+  }
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -28,16 +43,18 @@ function HomeScreen() {
         justifyContent: 'center',
       }}>
         <View style={styles.contenedorUsuario}>
-          <Image source = {require("./assets/imagen-perfil-anna-base.png")} style={styles.fotoPerfil}/>
+        <TouchableOpacity>
+          <Image source = {require("./assets/imagen-usuario-por-defecto-app-movil.png")} style={styles.fotoPerfil}/>
+        </TouchableOpacity>
           <Text style={styles.titulo}>¡Bienvenido!</Text>
         </View>
-        <TouchableOpacity style={[styles.botonAzul, {marginTop: 40}]}>
+        <TouchableOpacity onPress={NavegarSeccion} style={[styles.botonAzul, {marginTop: 40}]}>
           <Text style={styles.letra}>SECCIÓN PARTICIPATIVA</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botonAzul}>
+        <TouchableOpacity onPress={NavegarAsistente} style={styles.botonAzul}>
           <Text style={styles.letra}>ASISTENTE VIRTUAL</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.botonAzul, {marginBottom: 40}]}>
+        <TouchableOpacity onPress={NavegarAjustes} style={[styles.botonAzul, {marginBottom: 40}]}>
           <Text style={styles.letra}>AJUSTES APP</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.botonCerrarSesion}>
@@ -71,18 +88,18 @@ function LoginScreen() {
     })
   }
 
-    const handleSignIn = () => {
-      signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log('Signed In!')
-        const user = userCredential.user;
-        console.log(user)
-        navigation.navigate('Home');
-      })
-      .catch(error => {
-        console.log(error)
-        Alert.alert("Usuario y/o contraseña incorrecta")
-      })
+  const handleSignIn = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log('Signed In!')
+      const user = userCredential.user;
+      console.log(user)
+      navigation.navigate('Home');
+    })
+    .catch(error => {
+      console.log(error)
+      Alert.alert("Usuario y/o contraseña incorrecta")
+    })
   }
 
   return (
@@ -121,6 +138,118 @@ function LoginScreen() {
   );
 }
 
+function SeccionParticipativaScreen() {
+  
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+      <Image source = {require("./assets/pattern-fondo-web.png")} style={[styles.image, StyleSheet.absoluteFill]}/>
+      <View style={styles.contenedorLogo}>
+        <Image source = {require("./assets/logo-negativo-utadeo.png")} style={styles.logo}/>
+      </View>
+      <ScrollView contentContainerStyle= {{
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <View style={styles.contenedorUsuario}>
+          <Image source = {require("./assets/imagen-perfil-anna-base.png")} style={styles.fotoPerfil}/>
+          <Text style={styles.titulo}>¡Bienvenido!</Text>
+        </View>
+        <TouchableOpacity style={[styles.botonAzul, {marginTop: 40}]}>
+          <Text style={styles.letra}>SECCIÓN PARTICIPATIVA</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonAzul}>
+          <Text style={styles.letra}>ASISTENTE VIRTUAL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.botonAzul, {marginBottom: 40}]}>
+          <Text style={styles.letra}>AJUSTES APP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonCerrarSesion}>
+          <Text style={styles.letra}>CERRAR SESIÓN</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+function AsistenteScreen() {
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+      <Image source = {require("./assets/pattern-fondo-web.png")} style={[styles.image, StyleSheet.absoluteFill]}/>
+      <View style={styles.contenedorLogo}>
+        <Image source = {require("./assets/logo-negativo-utadeo.png")} style={styles.logo}/>
+      </View>
+      <ScrollView contentContainerStyle= {{
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <View style={styles.contenedorUsuario}>
+          <Image source = {require("./assets/imagen-perfil-anna-base.png")} style={styles.fotoPerfil}/>
+          <Text style={styles.titulo}>¡Bienvenido!</Text>
+        </View>
+        <TouchableOpacity style={[styles.botonAzul, {marginTop: 40}]}>
+          <Text style={styles.letra}>SECCIÓN PARTICIPATIVA</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonAzul}>
+          <Text style={styles.letra}>ASISTENTE VIRTUAL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.botonAzul, {marginBottom: 40}]}>
+          <Text style={styles.letra}>AJUSTES APP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonCerrarSesion}>
+          <Text style={styles.letra}>CERRAR SESIÓN</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+function AjustesScreen() {
+  return (
+    <View style={styles.container}>
+      <StatusBar style="auto" />
+      <Image source = {require("./assets/pattern-fondo-web.png")} style={[styles.image, StyleSheet.absoluteFill]}/>
+      <View style={styles.contenedorLogo}>
+        <Image source = {require("./assets/logo-negativo-utadeo.png")} style={styles.logo}/>
+      </View>
+      <ScrollView contentContainerStyle= {{
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <View style={styles.contenedorUsuario}>
+          <Image source = {require("./assets/imagen-perfil-anna-base.png")} style={styles.fotoPerfil}/>
+          <Text style={styles.titulo}>¡Bienvenido!</Text>
+        </View>
+        <TouchableOpacity style={[styles.botonAzul, {marginTop: 40}]}>
+          <Text style={styles.letra}>SECCIÓN PARTICIPATIVA</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonAzul}>
+          <Text style={styles.letra}>ASISTENTE VIRTUAL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.botonAzul, {marginBottom: 40}]}>
+          <Text style={styles.letra}>AJUSTES APP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonCerrarSesion}>
+          <Text style={styles.letra}>CERRAR SESIÓN</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -129,6 +258,9 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Login" component={LoginScreen}/>
         <Stack.Screen name="Home" component={HomeScreen}/>
+        <Stack.Screen name="SeccionParticipativa" component={SeccionParticipativaScreen}/>
+        <Stack.Screen name="Asistente" component={AsistenteScreen}/>
+        <Stack.Screen name="Ajustes" component={AjustesScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
