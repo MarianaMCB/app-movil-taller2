@@ -1,12 +1,92 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity, Alert } from 'react-native';
 import React from "react";
 
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from './firebase-config';
 
-export default function App() {
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+
+
+function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style="auto" />
+      <Image source = {require("./assets/pattern-fondo-web.png")} style={[styles.image, StyleSheet.absoluteFill]}/>
+      <View style={styles.contenedorLogo}>
+        <Image source = {require("./assets/logo-negativo-utadeo.png")} style={styles.logo}/>
+      </View>
+      <ScrollView contentContainerStyle= {{
+        flex: 1,
+        flexDirection: 'column',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+        <View style={styles.contenedorUsuario}>
+          <Image source = {require("./assets/imagen-perfil-anna-base.png")} style={styles.fotoPerfil}/>
+          <Text style={styles.titulo}>¡Bienvenido!</Text>
+        </View>
+        <TouchableOpacity style={[styles.botonAzul, {marginTop: 40}]}>
+          <Text style={styles.letra}>SECCIÓN PARTICIPATIVA</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonAzul}>
+          <Text style={styles.letra}>ASISTENTE VIRTUAL</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.botonAzul, {marginBottom: 40}]}>
+          <Text style={styles.letra}>AJUSTES APP</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.botonCerrarSesion}>
+          <Text style={styles.letra}>CERRAR SESIÓN</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+}
+
+function LoginScreen() {
+
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const navigation = useNavigation();
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const handleCreateAccount = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log('Account Created!')
+      const user = userCredential.user;
+      console.log(user)
+      Alert.alert("Usuario Registrado correctamente. Oprimir el boton de Ingresar")
+    })
+    .catch(error => {
+      console.log(error)
+      Alert.alert(error.message)
+    })
+  }
+
+    const handleSignIn = () => {
+      signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log('Signed In!')
+        const user = userCredential.user;
+        console.log(user)
+        navigation.navigate('Home');
+      })
+      .catch(error => {
+        console.log(error)
+        Alert.alert("Usuario y/o contraseña incorrecta")
+      })
+  }
+
+  return (
+    <View style={styles.container}>
       <StatusBar style="auto" />
       <Image source = {require("./assets/pattern-fondo-web.png")} style={[styles.image, StyleSheet.absoluteFill]}/>
       <ScrollView contentContainerStyle= {{
@@ -15,29 +95,42 @@ export default function App() {
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
-      }}>
-      <View style={styles.login}>
-        <Image source = {require("./assets/logo-negativo-utadeo.png")} style={styles.logo}/>
-        <View>
-          <Text style={styles.titulo}>Iniciar Sesión/Registrarse</Text>
+        }}>
+        <View style={styles.login}>
+          <Image source = {require("./assets/logo-negativo-utadeo.png")} style={styles.logo}/>
+          <View>
+            <Text style={styles.titulo}>Iniciar Sesión/Registrarse</Text>
+          </View>
+          <View>
+            <Text style={styles.letra}>Correo</Text>
+            <TextInput onChangeText={(text) => setEmail(text)} style={[styles.input]} placeholder="Ingresar correo"/>
+          </View>
+          <View>
+            <Text style={styles.letra}>Contraseña</Text>
+            <TextInput onChangeText={(text) => setPassword(text)} style={[styles.input]} placeholder="Ingresar contraseña" secureTextEntry={true}/>
+          </View>
+          <TouchableOpacity onPress={handleSignIn} style={styles.button}>
+            <Text style={styles.letra}>INGRESAR</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleCreateAccount} style={styles.button}>
+            <Text style={styles.letra}>REGISTRARSE</Text>
+          </TouchableOpacity>
         </View>
-        <View>
-          <Text style={styles.letra}>Correo</Text>
-          <TextInput style={[styles.input]} placeholder="Ingresar correo"/>
-        </View>
-        <View>
-          <Text style={styles.letra}>Contraseña</Text>
-          <TextInput style={[styles.input]} placeholder="Ingresar contraseña" secureTextEntry={true}/>
-        </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.letra}>INGRESAR</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.letra}>REGISTRARSE</Text>
-        </TouchableOpacity>
-      </View>
       </ScrollView>
     </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Home" component={HomeScreen}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
@@ -99,7 +192,62 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10,
     borderColor: '#37462C',
-    borderLeftWidth: 7,
-    borderBottomWidth: 7,
+    borderLeftWidth: 6,
+    borderBottomWidth: 6,
   },
+  contenedorLogo: {
+    width: '100%',
+    height: 130,
+    backgroundColor: '#315275',
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+    padding: 2,
+    alignItems: 'center',
+  },
+  contenedorUsuario: {
+    width: '100%',
+    height: '20%',
+    flex: 1,
+    flexDirection: 'row',
+    marginTop: 50,
+    marginVertical: 10,
+    backgroundColor: '#5f9950',
+    borderRadius: 12,
+    alignItems: 'center',
+    fontSize: 16,
+    fontWeight: '400',
+    paddingHorizontal: 40,
+  },
+  fotoPerfil: {
+    width: 120,
+    height: 120,
+    marginRight: 30,
+  },
+  botonAzul: {
+    width: 300,
+    height: 50,
+    borderRadius: 12,
+    borderBottomRightRadius: 6,
+    backgroundColor: '#509999',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 15,
+    borderColor: '#1D3045',
+    borderLeftWidth: 6,
+    borderBottomWidth: 6,
+  },
+  botonCerrarSesion: {
+    width: 220,
+    height: 50,
+    borderRadius: 12,
+    borderBottomRightRadius: 6,
+    backgroundColor: '#5f9950',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 10,
+    borderColor: '#37462C',
+    borderLeftWidth: 6,
+    borderBottomWidth: 6,
+    marginBottom: 40,
+  }
 });
