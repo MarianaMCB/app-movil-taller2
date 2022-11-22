@@ -4,12 +4,12 @@
     "slug": "appTADEOcomunica",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/new-icon-app-arcos.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/new-icon-app-arcos.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#315275"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -22,12 +22,18 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+        "foregroundImage": "./assets/new-icon-app-arcos.png",
+        "backgroundColor": "#315275"
+      },
+      "package": "com.marianamcb.appTADEOcomunica"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/new-icon-app-arcos.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "cf83b87b-f456-4019-badd-ec4f93155c3f"
+      }
     }
   }
 }
