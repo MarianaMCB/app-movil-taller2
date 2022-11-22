@@ -9,6 +9,8 @@ import { firebaseConfig } from './firebase-config';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
+import ImageScreen from './ImageScreen';
+import ImagenPicker from './ImagenPicker';
 
 
 function HomeScreen() {
@@ -27,6 +29,10 @@ function HomeScreen() {
     navigation.navigate('Ajustes');
   }
 
+  const NavegarPerfil = () => {
+    navigation.navigate('Perfil');
+  }
+  
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -43,7 +49,7 @@ function HomeScreen() {
         justifyContent: 'center',
       }}>
         <View style={styles.contenedorUsuario}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={NavegarPerfil}>
           <Image source = {require("./assets/imagen-usuario-por-defecto-app-movil.png")} style={styles.fotoPerfil}/>
         </TouchableOpacity>
           <Text style={styles.titulo}>¡Bienvenido!</Text>
@@ -57,7 +63,7 @@ function HomeScreen() {
         <TouchableOpacity onPress={NavegarAjustes} style={[styles.botonAzul, {marginBottom: 40}]}>
           <Text style={styles.letra}>AJUSTES APP</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.botonCerrarSesion}>
+        <TouchableOpacity onPress={ImageScreen} style={styles.botonCerrarSesion}>
           <Text style={styles.letra}>CERRAR SESIÓN</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -250,6 +256,14 @@ function AjustesScreen() {
   );
 }
 
+function PerfilScreen() {
+  return (
+    <View>
+      <ImagenPicker />
+    </View>
+  );
+}
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -261,6 +275,7 @@ export default function App() {
         <Stack.Screen name="SeccionParticipativa" component={SeccionParticipativaScreen}/>
         <Stack.Screen name="Asistente" component={AsistenteScreen}/>
         <Stack.Screen name="Ajustes" component={AjustesScreen}/>
+        <Stack.Screen name="Perfil" component={PerfilScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
